@@ -41,13 +41,13 @@ jobs:
       run: dotnet test --logger "trx;LogFileName=report.trx"
       working-directory: .
 
-    - name: Install ReportGenerator
-      run: dotnet tool install -g dotnet-reportgenerator-globaltool
+    - name: Install ReportUnit
+      run: dotnet tool install -g dotnet-reportunit-globaltool
 
     - name: Generate HTML Report
-      run: ~/.dotnet/tools/reportgenerator -reports:./Tests/TestResults/report.trx -targetdir:./Tests/TestResults/Report -reporttypes:Html
+      run: reportunit ./Tests/TestResults/report.trx ./Tests/TestResults/Report
       env:
-        PATH: ~/.dotnet/tools:$PATH 
+        PATH: ~/.dotnet/tools:$PATH
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
