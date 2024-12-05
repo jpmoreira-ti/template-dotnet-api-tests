@@ -31,8 +31,12 @@ jobs:
       run: dotnet build --configuration Release --no-restore
       working-directory: .
 
+    - name: Create test results directory
+      run: mkdir -p Tests/TestResults
+      working-directory: .  
+
     - name: Run tests
-      run: dotnet test Tests/Tests.csproj --verbosity normal --logger "trx;LogFileName=Tests/TestResults/test-results.trx"
+      run: dotnet test Tests/Tests.csproj --logger "trx;LogFileName=Tests/TestResults/test-results.trx"
       working-directory: .
 
     - name: Install ReportGenerator
