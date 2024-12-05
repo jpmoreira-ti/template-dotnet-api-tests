@@ -45,9 +45,9 @@ jobs:
       run: dotnet tool install -g dotnet-reportgenerator-globaltool
 
     - name: Generate HTML Report
-      run: reportgenerator -reports:./Tests/TestResults/report.trx -targetdir:./Tests/TestResults/Report -reporttypes:Html
+      run: ~/.dotnet/tools/reportgenerator -reports:./Tests/TestResults/report.trx -targetdir:./Tests/TestResults/Report -reporttypes:Html
       env:
-        PATH: ${{ runner.tool_cache }}/.dotnet/tools:$PATH   
+        PATH: ~/.dotnet/tools:$PATH 
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
@@ -66,4 +66,4 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: test-results
-        path: ./Tests/TestResults/  
+        path: ./Tests/TestResults/
