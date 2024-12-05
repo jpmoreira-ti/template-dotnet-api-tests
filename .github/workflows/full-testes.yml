@@ -31,18 +31,16 @@ jobs:
       run: dotnet build --configuration Release --no-restore
       working-directory: .
 
-    - name: Create test results directory
-      run: mkdir -p Tests/TestResults
-      working-directory: .  
-
     - name: Run tests
-      run: dotnet test Tests/Tests.csproj --logger "trx;LogFileName=Tests/TestResults/test-results.trx"
+      run: dotnet test Tests/Tests.csproj --no-build --logger "trx;LogFileName=Tests/TestResults/test-results.trx"
       working-directory: .
 
+    - name: Install ReportGenerator
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool  
+
     - name: Convert TRX File to HTML
-      run: |
-        dotnet tool install -g trx2html
-        trx2html test-results/test-results.trx -o test-results/test-results.html
+      run: reportgenerator -reports:Tests/TestResults/test-results.trx -targetdir:Tests/TestResults -reporttypes:Html
+      working-directory: .
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
