@@ -1,0 +1,19 @@
+# Compiled object files
+*.o
+*.obj
+*.dll
+*.exe
+*.pdb
+*.ilk
+*.lib
+*.ndb
+*.idb
+
+# Folders
+bin/
+obj/
+out/
+TestResults/
+.vscode/
+.idea/
+.vs/
