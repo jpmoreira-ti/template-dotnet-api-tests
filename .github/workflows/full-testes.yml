@@ -38,23 +38,15 @@ jobs:
       working-directory: .
 
     - name: Run tests
-      run: dotnet test --logger "trx;LogFileName=report.trx"
+      run: dotnet test -l:html
       working-directory: .
-
-    - name: Install ReportUnit
-      run: dotnet tool install -g dotnet-reportunit-globaltool
-
-    - name: Generate HTML Report
-      run: reportunit ./Tests/TestResults/report.trx ./Tests/TestResults/Report
-      env:
-        PATH: ~/.dotnet/tools:$PATH
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
         files: |
-          ./Tests/TestResults/*.trx
+          ./TestResults/*.html
           
     - name: Upload Test Artifacts
       uses: actions/upload-artifact@v4
